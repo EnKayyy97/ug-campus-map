@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Ghana Interactive Campus Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet LocateControl CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div id="map-container">
+        <div id="sidebar">
+            <!--sidebar toogle button-->
+            <button id="sidebar-toggle" class="toggle-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="logo-container">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDA1NmIzIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIwLjNlbSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2Ij5VRzwvdGV4dD4KPC9zdmc+" alt="University of Ghana logo">
+                <h2>Campus Map</h2>
+            </div>
+            
+            <div class="location-status" id="location-status">
+                <h4><i class="fas fa-map-marker-alt"></i> Location Status</h4>
+                <p id="location-text">Click "Find My Location" to enable location tracking</p>
+                <div class="location-actions">
+                    <button class="location-btn" id="find-location">
+                        <i class="fas fa-crosshairs"></i> Find My Location
+                    </button>
+                    <button class="location-btn" id="watch-location" disabled>
+                        <i class="fas fa-satellite-dish"></i> Track Me
+                    </button>
+                </div>
+                <div class="distance-info" id="distance-info" style="display: none;">
+                    <strong>Distance to selected location:</strong> <span id="distance-text">-</span>
+                </div>
+            </div>
+            
+            <input type="text" class="search-box" placeholder="Search locations...">
+            
+            <div class="category-title" data-category="academic">
+                <span>Academic Buildings</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul class="location-list" id="academic-list">
+                <li class="location-item" data-location="balme-library" data-coords="5.6518,-0.1871">
+                    <i class="fas fa-book location-icon"></i> Balme Library
+                </li>
+                <li class="location-item" data-location="great-hall" data-coords="5.6507,-0.1960">
+                    <i class="fas fa-landmark location-icon"></i> Great Hall
+                </li>
+                <li class="location-item" data-location="humanities" data-coords="5.6537,-0.1822">
+                    <i class="fas fa-pen-fancy location-icon"></i> College of Humanities
+                </li>
+                <li class="location-item" data-location="computer-science" data-coords="5.6545,-0.1838">
+                    <i class="fas fa-laptop-code location-icon"></i> Computer Science Department
+                </li>
+                <li class="location-item" data-location="business-school" data-coords="5.6587,-0.1777">
+                    <i class="fas fa-chart-line location-icon"></i> Business School
+                </li>
+                <li class="location-item" data-location="geography-dept" data-coords="5.6510,-0.1832">
+                    <i class="fas fa-globe-africa location-icon"></i> Geography & Resource Development
+                </li>
+                <li class="location-item" data-location="law-school" data-coords="5.6540,-0.1832">
+                    <i class="fas fa-gavel location-icon"></i> School of Law
+                </li>
+                 <li class="location-item" data-location="chemistry-dept" data-coords="5.6526,-0.1855">
+                    <i class="fas fa-book location-icon"></i> Department of Chemistry
+                </li>
+                 <li class="location-item" data-location="home-science" data-coords="5.6539,-0.1881">
+                     <i class="fas fa-book location-icon"></i> Department of Home Science
+                </li>
+                 <li class="location-item" data-location="political-science" data-coords="5.6551,-0.1907">
+                     <i class="fas fa-book location-icon"></i> Department of Political Science
+                </li>
+                 <li class="location-item" data-location="psychology" data-coords="5.6564,-0.1933">
+                    <i class="fas fa-book location-icon"></i> Department of Psychology
+                </li>
+                 <li class="location-item" data-location="info-studies" data-coords="5.6577,-0.1959">
+                    <i class="fas fa-book location-icon"></i> Department of Information Studies
+                </li>
+                <li class="location-item" data-location="animal-biology" data-coords="5.6602,-0.2010">
+                    <i class="fas fa-book location-icon"></i> Department of Animal Biology
+                </li>
+                <li class="location-item" data-location="marine-&-fisheries" data-coords="5.6590,-0.1984">
+                    <i class="fas fa-book location-icon"></i> Department of Marine and Fisheries Sciences
+                </li>
+                <li class="location-item" data-location="education-dept" data-coords="5.6615,-0.2036">
+                    <i class="fas fa-book location-icon"></i> Department of Education
+                </li>
+                <li class="location-item" data-location="teacher-education" data-coords="5.6628,-0.2062">
+                    <i class="fas fa-book location-icon"></i> Department of Teacher Education
+                </li>
+                <li class="location-item" data-location="inter-prog-office" data-coords="5.6641,-0.2087">
+                    <i class="fas fa-book location-icon"></i> International Programmes office
+                </li>
+                <li class="location-item" data-location="jqb" data-coords="5.6653,-0.2113">
+                    <i class="fas fa-book location-icon"></i> JQB Lecture Hall
+                </li>
+                <li class="location-item" data-location="africa-studies" data-coords="5.6666,-0.2139">
+                    <i class="fas fa-book location-icon"></i> Institute of Africa Studies
+                </li>
+                <li class="location-item" data-location="adult-edu" data-coords="5.6679,-0.2165">
+                    <i class="fas fa-book location-icon"></i> Department of Adult Education
+                </li>
+                <li class="location-item" data-location="archaeology" data-coords="5.6578,-0.2190">
+                    <i class="fas fa-book location-icon"></i> Department of Archaeology
+                </li>
+                <li class="location-item" data-location="cont-&-dist-school" data-coords="5.6704,-0.2216">
+                    <i class="fas fa-book location-icon"></i> School of Continuing and Distance Education
+                </li>
+                <li class="location-item" data-location="geology-dept" data-coords="5.6717,-0.2242">
+                    <i class="fas fa-book location-icon"></i> Department of Geology
+                </li>
+                <li class="location-item" data-location="inter-affairs" data-coords="5.6730,-0.2268">
+                    <i class="fas fa-book location-icon"></i> Centre for International Affairs
+                </li>
+                 <li class="location-item" data-location="physics-dept" data-coords="5.6743,-0.2293">
+                    <i class="fas fa-book location-icon"></i> Department of Physics
+                </li>
+                 <li class="location-item" data-location="plant-&-envt-biology" data-coords="5.6756,-0.2319">
+                    <i class="fas fa-book location-icon"></i> Department of Plant and Environmental Biology
+                </li>
+                 <li class="location-item" data-location="pharmacy-school" data-coords="5.6781,-0.2371">
+                    <i class="fas fa-book location-icon"></i> School of Pharmacy
+                </li>
+                 <li class="location-item" data-location="biochem-dept" data-coords="5.6794,-0.2396">
+                    <i class="fas fa-book location-icon"></i> Department of Biochemistry
+                </li>
+                 <li class="location-item" data-location="nursing-and-midwifery" data-coords="5.6807,-0.2422">
+                    <i class="fas fa-book location-icon"></i> School of Nursing and Midwifery
+                </li>
+                <li class="location-item" data-location="french-dept" data-coords="5.6819,-0.2448">
+                    <i class="fas fa-book location-icon"></i> French Department
+                </li>
+                <li class="location-item" data-location="isser" data-coords="5.6832,-0.2474">
+                    <i class="fas fa-book location-icon"></i> Institute of Statistical, Social and Economic Research(ISSER)
+                </li>
+                <li class="location-item" data-location="animal-science-dept" data-coords="5.6845,-0.2499">
+                    <i class="fas fa-book location-icon"></i> Department Of Animal Science
+                </li>
+                <li class="location-item" data-location="agriecons-agricbusiness" data-coords="5.6858,-0.2525">
+                    <i class="fas fa-book location-icon"></i> Department of Agriculture Economics and Agribusiness
+                </li>
+                <li class="location-item" data-location="agric-faculty" data-coords="5.6870,-0.2551">
+                    <i class="fas fa-book location-icon"></i> Faculty of Agriculture
+                </li>
+                 <li class="location-item" data-location="biotech-lab" data-coords="5.6896,-0.2602">
+                    <i class="fas fa-book location-icon"></i> Biotechnology Laboratory
+                </li>
+                 <li class="location-item" data-location="CEGENSA" data-coords="5.6909,-0.2628">
+                    <i class="fas fa-book location-icon"></i> CEGENSA - College
+                </li>
+                 <li class="location-item" data-location="crop-science" data-coords="5.6921,-0.2653">
+                    <i class="fas fa-book location-icon"></i> Department Of Crop Science
+                </li>
+                 <li class="location-item" data-location="music-dept" data-coords="5.6934,-0.2680">
+                    <i class="fas fa-book location-icon"></i> Department of Music
+                </li>
+                 <li class="location-item" data-location="CERGIS" data-coords="5.6947,-0.2705">
+                    <i class="fas fa-book location-icon"></i> RS/GIS Lab - Research institute
+                </li>
+                <li class="location-item" data-location="econs-dept" data-coords="5.6960,-0.2731">
+                    <i class="fas fa-book location-icon"></i> Department Of Economics
+                </li>
+                <li class="location-item" data-location="research-office" data-coords="5.6972,-0.2757">
+                    <i class="fas fa-book location-icon"></i> Research and Innovation Office Complex
+                </li>
+                <li class="location-item" data-location="biomed-dept" data-coords="5.7011,-0.2834">
+                    <i class="fas fa-book location-icon"></i> Biomedical Engineering Department
+                </li>
+                <li class="location-item" data-location="N-block" data-coords="5.7023,-0.2860">
+                    <i class="fas fa-book location-icon"></i> New N Block
+                </li>
+                <li class="location-item" data-location="c3ss" data-coords="5.7036,-0.2886">
+                    <i class="fas fa-book location-icon"></i> Centre for Climate Change and Sustainability Studies-C3SS
+                </li>
+                <li class="location-item" data-location="GCB-lecture-hall" data-coords="5.7049,-0.2912">
+                    <i class="fas fa-book location-icon"></i> GCB Lecture Building
+                </li>
+                <li class="location-item" data-location="sociology-dept" data-coords="5.7062,-0.2937">
+                    <i class="fas fa-book location-icon"></i> Sociology Department
+                </li>
+                <li class="location-item" data-location="GRASAG" data-coords="5.7074,-0.2963">
+                    <i class="fas fa-book location-icon"></i> School of Graduate studies
+                </li>
+                <li class="location-item" data-location="modern-langs" data-coords="5.7087,-0.2989">
+                    <i class="fas fa-book location-icon"></i> Department of Modern Languages
+                </li>
+                <li class="location-item" data-location="history-dept" data-coords="5.7100,-0.3015">
+                    <i class="fas fa-book location-icon"></i> Department Of History
+                </li>
+                <li class="location-item" data-location="MIASA" data-coords="5.7126,-0.3066">
+                    <i class="fas fa-book location-icon"></i> Merian Institute for Advanced Studies in Africa (MIASA) - Research institute
+                </li>
+                <li class="location-item" data-location="maison-francaise" data-coords="5.7138,-0.3091">
+                    <i class="fas fa-book location-icon"></i> Maison Française Legon - Educational institution
+                </li>
+                <li class="location-item" data-location="soil-science" data-coords="5.7151,-0.3118">
+                    <i class="fas fa-book location-icon"></i> Department of Soil Science
+                </li>
+                <li class="location-item" data-location="fam-and-consumer" data-coords="5.7164,-0.3143">
+                    <i class="fas fa-book location-icon"></i> Department Of Family And Consumer Science
+                </li>
+                <li class="location-item" data-location="UG-creche-kg" data-coords="5.7177,-0.3169">
+                    <i class="fas fa-book location-icon"></i> UG Creche and Kindergarten School
+                </li>
+                <li class="location-item" data-location="mfodwo" data-coords="5.7189,-0.3194">
+                    <i class="fas fa-book location-icon"></i> Mfodwo Complex/ N Block - Training center
+                </li>
+                <li class="location-item" data-location="socioso" data-coords="5.7202,-0.3221">
+                    <i class="fas fa-book location-icon"></i> School of Social Sciences
+                </li>
+                <li class="location-item" data-location="CSPS" data-coords="5.7215,-0.3246">
+                    <i class="fas fa-book location-icon"></i> CSPS - Centre for Social Policy Studies
+                </li>
+                <li class="location-item" data-location="religions" data-coords="5.7228,-0.3272">
+                    <i class="fas fa-book location-icon"></i> Department for the Study of Religions - Research Institute
+                </li>
+                <li class="location-item" data-location="philosophy-&-classics" data-coords="5.7240,-0.3298">
+                    <i class="fas fa-book location-icon"></i> Department Of Philosophy and Classics - Research Institute
+                </li>
+                <li class="location-item" data-location="economic-policy" data-coords="5.7253,-0.3324">
+                    <i class="fas fa-book location-icon"></i> Economic Policy Management Programme Office - Research Institute
+                </li>
+                <li class="location-item" data-location="public-health" data-coords=" 5.6366,-0.1827">
+                    <i class="fas fa-book location-icon"></i> School of Public Health
+                </li>
+                <li class="location-item" data-location="maths-dept" data-coords="5.7304,-0.3427">
+                    <i class="fas fa-book location-icon"></i> Department of Mathematics
+                </li>
+                <li class="location-item" data-location="stats-dept" data-coords="5.7317,-0.3452">
+                    <i class="fas fa-book location-icon"></i> Department of Statistics
+                </li>
+                <li class="location-item" data-location="WAGMC" data-coords=" 5.6348, -0.1847">
+                    <i class="fas fa-book location-icon"></i> West African Genetic Medicine Centre - WAGMC
+                </li>
+                <li class="location-item" data-location="engineering" data-coords="5.6553,-0.1830">
+                    <i class="fas fa-book location-icon"></i> School of Engineering Sciences
+                </li>
+                <li class="location-item" data-location="performing-arts" data-coords="5.7381,-0.3581">
+                    <i class="fas fa-book location-icon"></i> School of Performing Arts
+                </li>
+            </ul>
+            
+            <div class="category-title" data-category="residence">
+                <span>Residence Halls</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul class="location-list" id="residence-list">
+                <li class="location-item" data-location="legon-hall" data-coords="5.6502,-0.1884">
+                    <i class="fas fa-home location-icon"></i> Legon Hall
+                </li>
+                <li class="location-item" data-location="commonwealth-hall" data-coords="5.6506,-0.1925">
+                    <i class="fas fa-home location-icon"></i> Commonwealth Hall
+                </li>
+                <li class="location-item" data-location="volta-hall" data-coords="5.6518,-0.1898">
+                    <i class="fas fa-home location-icon"></i> Volta Hall
+                </li>
+                <li class="location-item" data-location="akuafo-hall" data-coords="5.6503,-0.1857">
+                    <i class="fas fa-home location-icon"></i> Akuafo Hall
+                </li>
+                <li class="location-item" data-location="akuafo-hall-annex" data-coords="5.6476,-0.1856">
+                    <i class="fas fa-home location-icon"></i> Akuafo Hall Annex
+                </li>
+                <li class="location-item" data-location="mensah-sarbah-hall" data-coords="5.6462,-0.1871">
+                    <i class="fas fa-home location-icon"></i> Mensah Sarbah Hall
+                </li>
+                <li class="location-item" data-location="vikings-hostel" data-coords="5.6442,-0.1856">
+                    <i class="fas fa-home location-icon"></i> Vikings Hostel
+                </li>
+                 <li class="location-item" data-location="legon-hall-annex" data-coords="5.6474,-0.1881">
+                    <i class="fas fa-home location-icon"></i> Legon Hall Annex
+                </li>
+                 <li class="location-item" data-location="mensah-sarbah-annex" data-coords="5.6454,-0.1854">
+                    <i class="fas fa-home location-icon"></i> Mensah Sarbah Annex
+                </li>
+                <li class="location-item" data-location="valco-trust-hostel" data-coords="5.6443,-0.1869">
+                    <i class="fas fa-home location-icon"></i> Valco Trust Hostel
+                </li>
+                <li class="location-item" data-location="old-pentagon-blocks" data-coords="5.6567,-0.1814">
+                    <i class="fas fa-home location-icon"></i> Old Pentagon Blocks
+                </li>
+                <li class="location-item" data-location="pent-hostel-block-a" data-coords="5.6572,-0.1820">
+                    <i class="fas fa-home location-icon"></i> Pent Hostel Block A
+                </li>
+                <li class="location-item" data-location="pent-hostel-block-b" data-coords="5.6585,-0.1819">
+                    <i class="fas fa-home location-icon"></i> Pent Hostel Block B
+                </li>
+                <li class="location-item" data-location="pent-hostel-block-c" data-coords="5.6584,-0.1813">
+                    <i class="fas fa-home location-icon"></i> Pent Hostel Block C
+                </li>
+                <li class="location-item" data-location="evandy-hostel" data-coords="5.6629,-0.1817">
+                    <i class="fas fa-home location-icon"></i> Evandy Hostel
+                </li>
+                <li class="location-item" data-location="bani-hostel" data-coords="5.6630,-0.1797">
+                    <i class="fas fa-home location-icon"></i> Bani Hostel
+                </li>
+                <li class="location-item" data-location="tf-hostel" data-coords="5.6662,-0.1821">
+                    <i class="fas fa-home location-icon"></i> TF Hostel
+                </li>
+                 <li class="location-item" data-location="jubilee-hall" data-coords="5.6405,-0.1860">
+                    <i class="fas fa-home location-icon"></i> Jubilee Hall
+                </li>
+                 <li class="location-item" data-location="ish-hostel" data-coords="5.6399,-0.1852">
+                    <i class="fas fa-home location-icon"></i> International Student Hostel
+                </li>
+                 <li class="location-item" data-location="limann-hall" data-coords="5.6373,-0.1848">
+                    <i class="fas fa-home location-icon"></i> Dr. Hilla Limann Hall
+                </li>
+                 <li class="location-item" data-location="kwapong-hall" data-coords="5.6370,-0.1855">
+                    <i class="fas fa-home location-icon"></i> Alexander Kwapong Hall
+                </li>
+                 <li class="location-item" data-location="sey-hall" data-coords="5.6358,-0.1877">
+                    <i class="fas fa-home location-icon"></i> Elizabeth Sey Hall
+                </li>
+                  <li class="location-item" data-location="jean-nelson-hall" data-coords="5.6355,-0.1882">
+                    <i class="fas fa-home location-icon"></i> Jean Nelson Akah Hall
+                </li>
+            </ul>
+            
+            <div class="category-title" data-category="services">
+                <span>Services & Facilities</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul class="location-list" id="services-list">
+                <li class="location-item" data-location="cafeteria" data-coords="5.6468,-0.1868">
+                    <i class="fas fa-utensils location-icon"></i> Central Cafeteria
+                </li>
+                <li class="location-item" data-location="hospital" data-coords="5.6511,-0.1779">
+                    <i class="fas fa-hospital location-icon"></i> Legon Hospital
+                </li>
+                <li class="location-item" data-location="UG-Stadium" data-coords="5.6393,-0.1811">
+                    <i class="fas fa-running location-icon"></i> Sports Complex
+                </li>
+                <li class="location-item" data-location="bank" data-coords="5.6427,-0.1856">
+                    <i class="fas fa-university location-icon"></i> University Banking Square
+                </li>
+                <li class="location-item" data-location="ecowas-coastal-marine" data-coords="5.7368,-0.3555">
+                    <i class="fas fa-university location-icon"></i> ECOWAS Coastal & Marine Resources Management Centre
+                </li>
+                <li class="location-item" data-location="ghkorea-info" data-coords="5.7279,-0.3375">
+                    <i class="fas fa-university location-icon"></i> Ghana Korea Information Access Centre
+                </li>
+            </ul>
+            
+            <div class="location-details" id="location-details">
+                <span class="close-details">&times;</span>
+                <h3 id="detail-title">Location Name</h3>
+                <img id="detail-image" src="" alt="Location Image">
+                <div id="detail-description">Loading details...</div>
+                <div id="detail-contacts"></div>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet LocateControl JS -->
+    <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
