@@ -144,7 +144,7 @@ const locationData = {
         title: 'University of Ghana Sports Stadium', 
         description: 'University sports facilities including football stadium, tennis courts, basketball courts, swimming pool, and gymnasium.',
         contacts: 'Sports Office: +233 30 250 0000',
-        image: 'https://via.placeholder.com/300x200?text=Sports+Complex'
+        image: 'https://cdn.ghanafa.org/2024/05/IMG_0156.jpeg'
     },
     'bank': {
         title: 'UG Banking Square',
@@ -327,7 +327,7 @@ const locationData = {
         image: 'https://ugel.com.gh/wp-content/uploads/2016/03/jean2.png'
     },
     'education-dept': {
-        title: 'Department of Education',
+        title: 'Department of Educational Studies and Leadership (DESL)',
         description: 'Named after an alumnus, Jean Nelson Akah. It was inaugurated in July 2010. Its emblem shows a candle, a book and a pen to symbolize perseverance.',
         contacts: 'Hall Office: +233 30 250 0000',
         image: 'https://ugel.com.gh/wp-content/uploads/2016/03/jean2.png'
